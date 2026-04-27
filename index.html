@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>回避型診断＆トリセツ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;600&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #FAF8F5;
+    --surface: #FFFFFF;
+    --surface2: #F4F1ED;
+    --text: #1A1410;
+    --text2: #6B6158;
+    --text3: #A89F96;
+    --border: rgba(0,0,0,0.1);
+    --border2: rgba(0,0,0,0.18);
+    --purple-bg: #EEEDFE;
+    --purple-text: #3C3489;
+    --purple-accent: #7F77DD;
+    --green-bg: #E1F5EE;
+    --green-text: #0F6E56;
+    --amber-bg: #FAEEDA;
+    --amber-text: #854F0B;
+    --red-bg: #FCEBEB;
+    --red-text: #A32D2D;
+  }
+
+  body {
+    font-family: 'Noto Sans JP', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding-bottom: 4rem;
+  }
+
+  /* Hero */
+  .hero {
+    background: var(--text);
+    color: white;
+    padding: 3.5rem 1.5rem 3rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      45deg, transparent, transparent 40px,
+      rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px
+    );
+  }
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+    text-transform: uppercase;
+  }
+  .hero-title {
+    font-family: 'Noto Serif JP', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 0.75rem;
+  }
+  .hero-sub {
+    font-size: 14px;
+    color: rgba(255,255,255,0.55);
+    line-height: 1.7;
+  }
+
+  /* Layout */
+  .wrapper { max-width: 700px; margin: 0 auto; padding: 0 1.25rem; }
+
+  /* Section */
+  .section { margin-top: 2.5rem; }
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text3);
+    margin-bottom: 0.75rem;
+    padding-left: 2px;
+  }
+
+  /* Level Cards */
+  .level-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+  .level-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.1rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .level-card:hover { border-color: var(--border2); transform: translateY(-1px); }
+  .level-card.active { border-width: 2px; }
+  .level-card.active.lv1 { border-color: #1D9E75; background: #f0fdf8; }
+  .level-card.active.lv2 { border-color: #BA7517; background: #fffbf0; }
+  .level-card.active.lv3 { border-color: #E24B4A; background: #fff5f5; }
+  .level-badge {
+    display: inline-block;
+    font-size: 10px;
+    font-weight: 700;
+    padding: 2px 9px;
+    border-radius: 20px;
+    margin-bottom: 7px;
+    letter-spacing: 0.05em;
+  }
+  .lv1 .level-badge { background: var(--green-bg); color: var(--green-text); }
+  .lv2 .level-badge { background: var(--amber-bg); color: var(--amber-text); }
+  .lv3 .level-badge { background: var(--red-bg); color: var(--red-text); }
+  .level-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
+  .level-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
+
+  /* Checklist */
+  .check-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+  .check-intro { font-size: 13px; color: var(--text2); margin-bottom: 1rem; }
+  .check-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7px;
+    margin-bottom: 1rem;
+  }
+  @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } .level-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
+  .check-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    cursor: pointer;
+    font-size: 12.5px;
+    color: var(--text);
+    transition: all 0.15s;
+    user-select: none;
+  }
+  .check-item:hover { border-color: var(--border2); }
+  .check-item.checked { background: var(--purple-bg); border-color: #AFA9EC; color: var(--purple-text); }
+  .check-box {
+    width: 18px; height: 18px;
+    border: 1.5px solid var(--border2);
+    border-radius: 5px;
+    background: white;
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 700;
+    transition: all 0.15s;
+  }
+  .check-item.checked .check-box { background: var(--purple-accent); border-color: var(--purple-accent); color: white; }
+  .diag-result {
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-weight: 500;
+    text-align: center;
+    display: none;
+    line-height: 1.6;
+  }
+  .diag-result.show { display: block; }
+
+  /* Type Tabs */
+  .type-tabs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+  }
+  .type-tab {
+    padding: 7px 16px;
+    border-radius: 20px;
+    font-size: 13px;
+    cursor: pointer;
+    border: 1px solid var(--border2);
+    background: var(--surface);
+    color: var(--text2);
+    transition: all 0.15s;
+    font-weight: 500;
+  }
+  .type-tab:hover { color: var(--text); border-color: var(--border2); }
+  .type-tab.active { background: var(--text); color: white; border-color: var(--text); }
+
+  .type-detail {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    padding: 1.25rem;
+  }
+  .type-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 1rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+  .type-icon {
+    width: 46px; height: 46px;
+    border-radius: 50%;
+    background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .type-title { font-size: 17px; font-weight: 700; }
+  .type-subtitle { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
+
+  .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+  .detail-block { padding: 12px; border-radius: 10px; background: var(--surface2); }
+  .detail-label {
+    font-size: 10px; font-weight: 700; color: var(--text3);
+    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
+  }
+  .detail-item {
+    font-size: 12.5px; color: var(--text);
+    line-height: 1.6; padding: 2px 0;
+    display: flex; align-items: flex-start; gap: 6px;
+  }
+  .dot {
+    width: 5px; height: 5px;
+    border-radius: 50%; background: var(--purple-accent);
+    flex-shrink: 0; margin-top: 8px;
+  }
+
+  .ok-block {
+    border-left: 3px solid #1D9E75;
+    padding: 12px 14px;
+    background: var(--green-bg);
+    border-radius: 0 10px 10px 0;
+    margin-top: 10px;
+  }
+  .ok-label { font-size: 10px; font-weight: 700; color: var(--green-text); margin-bottom: 7px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ok-item { font-size: 12.5px; color: var(--text); line-height: 1.7; padding: 2px 0; display: flex; gap: 7px; }
+  .ok-arrow { color: var(--green-text); font-weight: 700; flex-shrink: 0; }
+
+  .ng-block {
+    border-left: 3px solid #E24B4A;
+    padding: 12px 14px;
+    background: var(--red-bg);
+    border-radius: 0 10px 10px 0;
+    margin-top: 8px;
+  }
+  .ng-label { font-size: 10px; font-weight: 700; color: var(--red-text); margin-bottom: 7px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .ng-item { font-size: 12.5px; color: var(--text); line-height: 1.7; padding: 2px 0; display: flex; gap: 7px; }
+  .ng-arrow { color: var(--red-text); font-weight: 700; flex-shrink: 0; }
+
+  /* Footer */
+  .footer { margin-top: 4rem; text-align: center; font-size: 11px; color: var(--text3); padding: 2rem 1.25rem; border-top: 1px solid var(--border); }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="wrapper">
+    <div class="hero-eyebrow">Attachment Style Guide</div>
+    <h1 class="hero-title">回避型診断＆トリセツ</h1>
+    <p class="hero-sub">彼の言動からタイプを見極め、<br>正しいアプローチを知る</p>
+  </div>
+</div>
+
+<div class="wrapper">
+
+  <!-- Level -->
+  <div class="section">
+    <div class="section-label">Step 1 — レベル確認</div>
+    <div class="level-grid">
+      <div class="level-card lv1 active" onclick="selectLevel('lv1', this)">
+        <div class="level-badge">Lv.1</div>
+        <div class="level-name">軽度回避</div>
+        <div class="level-desc">感情表現が苦手だが関係は維持できる</div>
+      </div>
+      <div class="level-card lv2" onclick="selectLevel('lv2', this)">
+        <div class="level-badge">Lv.2</div>
+        <div class="level-name">中度回避</div>
+        <div class="level-desc">距離を置きながらもつながりを求める</div>
+      </div>
+      <div class="level-card lv3" onclick="selectLevel('lv3', this)">
+        <div class="level-badge">Lv.3</div>
+        <div class="level-name">重度回避</div>
+        <div class="level-desc">親密さへの強い恐怖・壁が非常に厚い</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Checklist -->
+  <div class="section">
+    <div class="section-label">Step 2 — チェックリストで簡易診断</div>
+    <div class="check-card">
+      <div class="check-intro">彼の言動に当てはまるものをすべてチェックしてください</div>
+      <div class="check-grid" id="checkGrid">
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>感情の話題を避ける</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>既読スルーが多い</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>予定を急にキャンセル</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>「自分の時間が必要」が口癖</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>喧嘩後に何日も無視</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>将来の話を嫌がる</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>怒ると完全にシャットアウト</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>「縛られたくない」とよく言う</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>自分のルールに強くこだわる</div>
+        <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>感情的になると去ってしまう</div>
+      </div>
+      <div class="diag-result" id="diagResult"></div>
+    </div>
+  </div>
+
+  <!-- Type -->
+  <div class="section">
+    <div class="section-label">Step 3 — タイプ別トリセツ</div>
+    <div class="type-tabs">
+      <div class="type-tab active" onclick="selectType('dasso', this)">🏃 脱走型</div>
+      <div class="type-tab" onclick="selectType('dokusai', this)">👑 独裁型</div>
+      <div class="type-tab" onclick="selectType('freeze', this)">🧊 フリーズ型</div>
+      <div class="type-tab" onclick="selectType('silent', this)">🌑 サイレント型</div>
+    </div>
+    <div class="type-detail" id="typeDetail"></div>
+  </div>
+
+</div>
+
+<div class="footer">
+  回避型愛着スタイルの理解と対応のためのガイド
+</div>
+
+<script>
+const types = {
+  dasso: {
+    icon: '🏃',
+    title: '脱走型',
+    subtitle: '「逃げることで自分を守る」 ─ 最も多い回避スタイル',
+    signs: ['仲が深まると急に連絡が減る', '「ちょっと距離置きたい」が口癖', '楽しそうなのに突然冷める', '追われると逃げ、放置されると戻る'],
+    reason: ['幼少期に感情を出すと傷ついた経験', '「深入り＝危険」という無意識の恐怖', '親密さが近づくと体が逃げモードに'],
+    ok: ['「連絡なくても待てるよ」と伝えておく', '戻ってきたときは責めず普通に接する', '自分の時間・趣味を充実させる', '「好きだけど急かさない」を態度で示す'],
+    ng: ['「なんで逃げるの」と詰め寄る', '毎日連絡を求める・未読確認を責める', '「どうせまた逃げるんでしょ」と言う']
+  },
+  dokusai: {
+    icon: '👑',
+    title: '独裁型',
+    subtitle: '「コントロールで不安を消す」 ─ 支配的に見えて内側は怖がり',
+    signs: ['自分のルールを相手に押しつける', '意見を否定されると急に不機嫌になる', '「俺のやり方が正しい」が多い', '感情より論理・効率で物事を決める'],
+    reason: ['弱さを見せることへの強い抵抗感', 'コントロールを手放すと不安になる', '完璧でないと愛されないという信念'],
+    ok: ['意見は「提案」の形でやわらかく伝える', '彼の判断を尊重する場面を意図的に作る', '「弱くていい」を言葉でなく態度で示す', '直接対決を避け迂回ルートで話す'],
+    ng: ['正面から論破しようとする', '「支配的だ」と直接指摘する', '感情的に反論する（論理で返ってくる）']
+  },
+  freeze: {
+    icon: '🧊',
+    title: 'フリーズ型',
+    subtitle: '「固まることで身を守る」 ─ 感情が止まったように見える',
+    signs: ['重要な話になると突然無口になる', '表情がなくなり「うん」しか言わない', 'どう感じているか聞いても「わからない」', '衝突が起きると茫然としてしまう'],
+    reason: ['感情処理に時間が人より長くかかる', '幼少期に感情表現を許されなかった', 'オーバーロードで思考がシャットダウン'],
+    ok: ['「今すぐ答えなくていいよ」と伝える', '沈黙を埋めようとしない（待つ）', '「落ち着いたら話そう」と場を切る', 'LINEなど文字での対話も取り入れる'],
+    ng: ['沈黙に耐えられず矢継ぎ早に質問する', '「ちゃんと聞いてるの?」と責める', '感情を無理やり引き出そうとする']
+  },
+  silent: {
+    icon: '🌑',
+    title: 'サイレント型',
+    subtitle: '「消えることで関係を終わらせる」 ─ 突然の音信不通タイプ',
+    signs: ['喧嘩が起きると連絡が完全に途絶える', '謝罪や説明なく数日後に普通に戻る', '「どこにいたの」と聞いても曖昧にする', '感情のピークに達すると存在消去'],
+    reason: ['対立・謝罪が非常に苦手', '「いなくなることが最善」という回路', '言葉で解決する力が育っていない'],
+    ok: ['戻ってきたとき「心配した」と一言だけ', 'ルール設定：「消える前に一言だけ教えて」', '消えている間は追わず自分の生活を続ける', '戻ったあとに穏やかにルールを話し合う'],
+    ng: ['消えている間に大量にLINEを送る', '「最低だ」と怒りをぶつける', '「また消えるんでしょ」と予防線を張る']
+  }
+};
+
+function selectLevel(lv, el) {
+  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function toggleCheck(el) {
+  el.classList.toggle('checked');
+  const box = el.querySelector('.check-box');
+  box.textContent = el.classList.contains('checked') ? '✓' : '';
+  const checked = document.querySelectorAll('.check-item.checked').length;
+  const r = document.getElementById('diagResult');
+  if (checked === 0) { r.className = 'diag-result'; return; }
+  r.classList.add('show');
+  if (checked <= 2) {
+    r.style.background = '#E1F5EE'; r.style.color = '#0F6E56';
+    r.textContent = '✦  Lv.1 軽度 ── 日常的な関わり方を少し調整するだけで改善の余地あり';
+  } else if (checked <= 5) {
+    r.style.background = '#FAEEDA'; r.style.color = '#854F0B';
+    r.textContent = '✦  Lv.2 中度 ── タイプを見極めてアプローチを変えることが重要';
+  } else {
+    r.style.background = '#FCEBEB'; r.style.color = '#A32D2D';
+    r.textContent = '✦  Lv.3 重度 ── 相手の変化を期待するより自分の軸を保つことが先決';
+  }
+}
+
+function selectType(key, el) {
+  document.querySelectorAll('.type-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  const t = types[key];
+  document.getElementById('typeDetail').innerHTML = `
+    <div class="type-header">
+      <div class="type-icon">${t.icon}</div>
+      <div>
+        <div class="type-title">${t.title}</div>
+        <div class="type-subtitle">${t.subtitle}</div>
+      </div>
+    </div>
+    <div class="detail-grid">
+      <div class="detail-block">
+        <div class="detail-label">よくある言動</div>
+        ${t.signs.map(s => `<div class="detail-item"><div class="dot"></div>${s}</div>`).join('')}
+      </div>
+      <div class="detail-block">
+        <div class="detail-label">なぜそうなるか</div>
+        ${t.reason.map(s => `<div class="detail-item"><div class="dot"></div>${s}</div>`).join('')}
+      </div>
+    </div>
+    <div class="ok-block">
+      <div class="ok-label">OK ── 有効なアプローチ</div>
+      ${t.ok.map(s => `<div class="ok-item"><span class="ok-arrow">→</span>${s}</div>`).join('')}
+    </div>
+    <div class="ng-block">
+      <div class="ng-label">NG ── 逆効果になること</div>
+      ${t.ng.map(s => `<div class="ng-item"><span class="ng-arrow">×</span>${s}</div>`).join('')}
+    </div>
+  `;
+}
+
+selectType('dasso', document.querySelector('.type-tab'));
+</script>
+</body>
+</html>
