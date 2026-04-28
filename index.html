@@ -36,7 +36,6 @@
     padding-bottom: 4rem;
   }
 
-  /* Hero */
   .hero {
     background: var(--text);
     color: white;
@@ -49,219 +48,81 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: repeating-linear-gradient(
-      45deg, transparent, transparent 40px,
-      rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px
-    );
+    background: repeating-linear-gradient(45deg, transparent, transparent 40px, rgba(255,255,255,0.02) 40px, rgba(255,255,255,0.02) 80px);
   }
-  .hero-eyebrow {
-    font-size: 11px;
-    letter-spacing: 0.15em;
-    color: rgba(255,255,255,0.5);
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-  .hero-title {
-    font-family: 'Noto Serif JP', serif;
-    font-size: clamp(1.8rem, 5vw, 2.8rem);
-    font-weight: 600;
-    line-height: 1.3;
-    margin-bottom: 0.75rem;
-  }
-  .hero-sub {
-    font-size: 14px;
-    color: rgba(255,255,255,0.55);
-    line-height: 1.7;
-  }
+  .hero-eyebrow { font-size: 11px; letter-spacing: 0.15em; color: rgba(255,255,255,0.5); margin-bottom: 1rem; text-transform: uppercase; }
+  .hero-title { font-family: 'Noto Serif JP', serif; font-size: clamp(1.8rem, 5vw, 2.8rem); font-weight: 600; line-height: 1.3; margin-bottom: 0.75rem; }
+  .hero-sub { font-size: 14px; color: rgba(255,255,255,0.55); line-height: 1.7; }
 
-  /* Layout */
   .wrapper { max-width: 700px; margin: 0 auto; padding: 0 1.25rem; }
-
-  /* Section */
   .section { margin-top: 2.5rem; }
-  .section-label {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text3);
-    margin-bottom: 0.75rem;
-    padding-left: 2px;
-  }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); margin-bottom: 0.75rem; padding-left: 2px; }
 
-  /* Level Cards */
-  .level-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 10px;
-  }
-  .level-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.1rem 1rem;
-    cursor: pointer;
-    transition: all 0.2s;
-  }
-  .level-card:hover { border-color: var(--border2); transform: translateY(-1px); }
-  .level-card.active { border-width: 2px; }
-  .level-card.active.lv1 { border-color: #1D9E75; background: #f0fdf8; }
-  .level-card.active.lv2 { border-color: #BA7517; background: #fffbf0; }
-  .level-card.active.lv3 { border-color: #E24B4A; background: #fff5f5; }
-  .level-badge {
-    display: inline-block;
-    font-size: 10px;
-    font-weight: 700;
-    padding: 2px 9px;
-    border-radius: 20px;
-    margin-bottom: 7px;
-    letter-spacing: 0.05em;
-  }
-  .lv1 .level-badge { background: var(--green-bg); color: var(--green-text); }
-  .lv2 .level-badge { background: var(--amber-bg); color: var(--amber-text); }
-  .lv3 .level-badge { background: var(--red-bg); color: var(--red-text); }
-  .level-name { font-size: 14px; font-weight: 700; margin-bottom: 4px; }
-  .level-desc { font-size: 11px; color: var(--text2); line-height: 1.5; }
-
-  /* Checklist */
-  .check-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem;
-  }
+  .check-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
   .check-intro { font-size: 13px; color: var(--text2); margin-bottom: 1rem; }
-  .check-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 7px;
-    margin-bottom: 1rem;
-  }
-  @media (max-width: 480px) { .check-grid { grid-template-columns: 1fr; } .level-grid { grid-template-columns: 1fr; } .detail-grid { grid-template-columns: 1fr; } }
+  .check-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 1rem; }
   .check-item {
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    padding: 8px 10px;
-    border-radius: 10px;
-    border: 1px solid var(--border);
-    background: var(--surface);
-    cursor: pointer;
-    font-size: 12.5px;
-    color: var(--text);
-    transition: all 0.15s;
-    user-select: none;
+    display: flex; align-items: center; gap: 9px;
+    padding: 8px 10px; border-radius: 10px;
+    border: 1px solid var(--border); background: var(--surface);
+    cursor: pointer; font-size: 12.5px; color: var(--text);
+    transition: all 0.15s; user-select: none;
   }
   .check-item:hover { border-color: var(--border2); }
   .check-item.checked { background: var(--purple-bg); border-color: #AFA9EC; color: var(--purple-text); }
   .check-box {
-    width: 18px; height: 18px;
-    border: 1.5px solid var(--border2);
-    border-radius: 5px;
-    background: white;
-    flex-shrink: 0;
+    width: 18px; height: 18px; border: 1.5px solid var(--border2);
+    border-radius: 5px; background: white; flex-shrink: 0;
     display: flex; align-items: center; justify-content: center;
-    font-size: 11px; font-weight: 700;
-    transition: all 0.15s;
+    font-size: 11px; font-weight: 700; transition: all 0.15s;
   }
   .check-item.checked .check-box { background: var(--purple-accent); border-color: var(--purple-accent); color: white; }
-  .diag-result {
-    border-radius: 10px;
-    padding: 12px 16px;
-    font-size: 13px;
-    font-weight: 500;
-    text-align: center;
-    display: none;
-    line-height: 1.6;
-  }
-  .diag-result.show { display: block; }
 
-  /* Type Tabs */
-  .type-tabs {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-    margin-bottom: 1rem;
-  }
+  .level-result { display: none; border-radius: 12px; overflow: hidden; }
+  .level-result.show { display: block; }
+  .level-result-inner { padding: 1.1rem 1.25rem; display: flex; align-items: flex-start; gap: 14px; }
+  .level-result-badge { font-size: 11px; font-weight: 700; padding: 3px 12px; border-radius: 20px; white-space: nowrap; margin-top: 3px; flex-shrink: 0; }
+  .level-result-title { font-size: 15px; font-weight: 700; margin-bottom: 5px; }
+  .level-result-desc { font-size: 12.5px; line-height: 1.7; opacity: 0.88; }
+
+  .type-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
   .type-tab {
-    padding: 7px 16px;
-    border-radius: 20px;
-    font-size: 13px;
-    cursor: pointer;
-    border: 1px solid var(--border2);
-    background: var(--surface);
-    color: var(--text2);
-    transition: all 0.15s;
-    font-weight: 500;
+    padding: 7px 16px; border-radius: 20px; font-size: 13px;
+    cursor: pointer; border: 1px solid var(--border2);
+    background: var(--surface); color: var(--text2);
+    transition: all 0.15s; font-weight: 500;
   }
-  .type-tab:hover { color: var(--text); border-color: var(--border2); }
+  .type-tab:hover { color: var(--text); }
   .type-tab.active { background: var(--text); color: white; border-color: var(--text); }
 
-  .type-detail {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 14px;
-    padding: 1.25rem;
-  }
-  .type-header {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid var(--border);
-  }
-  .type-icon {
-    width: 46px; height: 46px;
-    border-radius: 50%;
-    background: var(--surface2);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px; flex-shrink: 0;
-  }
+  .type-detail { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 1.25rem; }
+  .type-header { display: flex; align-items: center; gap: 12px; margin-bottom: 1rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+  .type-icon { width: 46px; height: 46px; border-radius: 50%; background: var(--surface2); display: flex; align-items: center; justify-content: center; font-size: 22px; flex-shrink: 0; }
   .type-title { font-size: 17px; font-weight: 700; }
   .type-subtitle { font-size: 12px; color: var(--text2); margin-top: 3px; line-height: 1.5; }
 
   .detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
   .detail-block { padding: 12px; border-radius: 10px; background: var(--surface2); }
-  .detail-label {
-    font-size: 10px; font-weight: 700; color: var(--text3);
-    letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px;
-  }
-  .detail-item {
-    font-size: 12.5px; color: var(--text);
-    line-height: 1.6; padding: 2px 0;
-    display: flex; align-items: flex-start; gap: 6px;
-  }
-  .dot {
-    width: 5px; height: 5px;
-    border-radius: 50%; background: var(--purple-accent);
-    flex-shrink: 0; margin-top: 8px;
-  }
+  .detail-label { font-size: 10px; font-weight: 700; color: var(--text3); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+  .detail-item { font-size: 12.5px; color: var(--text); line-height: 1.6; padding: 2px 0; display: flex; align-items: flex-start; gap: 6px; }
+  .dot { width: 5px; height: 5px; border-radius: 50%; background: var(--purple-accent); flex-shrink: 0; margin-top: 8px; }
 
-  .ok-block {
-    border-left: 3px solid #1D9E75;
-    padding: 12px 14px;
-    background: var(--green-bg);
-    border-radius: 0 10px 10px 0;
-    margin-top: 10px;
-  }
+  .ok-block { border-left: 3px solid #1D9E75; padding: 12px 14px; background: var(--green-bg); border-radius: 0 10px 10px 0; margin-top: 10px; }
   .ok-label { font-size: 10px; font-weight: 700; color: var(--green-text); margin-bottom: 7px; letter-spacing: 0.1em; text-transform: uppercase; }
   .ok-item { font-size: 12.5px; color: var(--text); line-height: 1.7; padding: 2px 0; display: flex; gap: 7px; }
   .ok-arrow { color: var(--green-text); font-weight: 700; flex-shrink: 0; }
 
-  .ng-block {
-    border-left: 3px solid #E24B4A;
-    padding: 12px 14px;
-    background: var(--red-bg);
-    border-radius: 0 10px 10px 0;
-    margin-top: 8px;
-  }
+  .ng-block { border-left: 3px solid #E24B4A; padding: 12px 14px; background: var(--red-bg); border-radius: 0 10px 10px 0; margin-top: 8px; }
   .ng-label { font-size: 10px; font-weight: 700; color: var(--red-text); margin-bottom: 7px; letter-spacing: 0.1em; text-transform: uppercase; }
   .ng-item { font-size: 12.5px; color: var(--text); line-height: 1.7; padding: 2px 0; display: flex; gap: 7px; }
   .ng-arrow { color: var(--red-text); font-weight: 700; flex-shrink: 0; }
 
-  /* Footer */
   .footer { margin-top: 4rem; text-align: center; font-size: 11px; color: var(--text3); padding: 2rem 1.25rem; border-top: 1px solid var(--border); }
+
+  @media (max-width: 480px) {
+    .check-grid { grid-template-columns: 1fr; }
+    .detail-grid { grid-template-columns: 1fr; }
+  }
 </style>
 </head>
 <body>
@@ -276,34 +137,12 @@
 
 <div class="wrapper">
 
-  <!-- Level -->
+  <!-- Step 1: Checklist + Level Result -->
   <div class="section">
-    <div class="section-label">Step 1 — レベル確認</div>
-    <div class="level-grid">
-      <div class="level-card lv1 active" onclick="selectLevel('lv1', this)">
-        <div class="level-badge">Lv.1</div>
-        <div class="level-name">軽度回避</div>
-        <div class="level-desc">感情表現が苦手だが関係は維持できる</div>
-      </div>
-      <div class="level-card lv2" onclick="selectLevel('lv2', this)">
-        <div class="level-badge">Lv.2</div>
-        <div class="level-name">中度回避</div>
-        <div class="level-desc">距離を置きながらもつながりを求める</div>
-      </div>
-      <div class="level-card lv3" onclick="selectLevel('lv3', this)">
-        <div class="level-badge">Lv.3</div>
-        <div class="level-name">重度回避</div>
-        <div class="level-desc">親密さへの強い恐怖・壁が非常に厚い</div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Checklist -->
-  <div class="section">
-    <div class="section-label">Step 2 — チェックリストで簡易診断</div>
+    <div class="section-label">Step 1 — チェックリストで診断</div>
     <div class="check-card">
       <div class="check-intro">彼の言動に当てはまるものをすべてチェックしてください</div>
-      <div class="check-grid" id="checkGrid">
+      <div class="check-grid">
         <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>感情の話題を避ける</div>
         <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>既読スルーが多い</div>
         <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>予定を急にキャンセル</div>
@@ -315,15 +154,24 @@
         <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>自分のルールに強くこだわる</div>
         <div class="check-item" onclick="toggleCheck(this)"><div class="check-box"></div>感情的になると去ってしまう</div>
       </div>
-      <div class="diag-result" id="diagResult"></div>
+      <div class="level-result" id="levelResult">
+        <div class="level-result-inner" id="levelResultInner">
+          <div class="level-result-badge" id="levelBadge"></div>
+          <div>
+            <div class="level-result-title" id="levelTitle"></div>
+            <div class="level-result-desc" id="levelDesc"></div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- Type -->
+  <!-- Step 2: Type Torisetsu -->
   <div class="section">
-    <div class="section-label">Step 3 — タイプ別トリセツ</div>
+    <div class="section-label">Step 2 — タイプ別トリセツ</div>
     <div class="type-tabs">
       <div class="type-tab active" onclick="selectType('dasso', this)">🏃 脱走型</div>
+      <div class="type-tab" onclick="selectType('osore', this)">🌪️ 恐れ回避型</div>
       <div class="type-tab" onclick="selectType('dokusai', this)">👑 独裁型</div>
       <div class="type-tab" onclick="selectType('freeze', this)">🧊 フリーズ型</div>
       <div class="type-tab" onclick="selectType('silent', this)">🌑 サイレント型</div>
@@ -345,8 +193,18 @@ const types = {
     subtitle: '「逃げることで自分を守る」 ─ 最も多い回避スタイル',
     signs: ['仲が深まると急に連絡が減る', '「ちょっと距離置きたい」が口癖', '楽しそうなのに突然冷める', '追われると逃げ、放置されると戻る'],
     reason: ['幼少期に感情を出すと傷ついた経験', '「深入り＝危険」という無意識の恐怖', '親密さが近づくと体が逃げモードに'],
-    ok: ['「連絡なくても待てるよ」と伝えておく', '戻ってきたときは責めず普通に接する', '自分の時間・趣味を充実させる', '「好きだけど急かさない」を態度で示す'],
+    ok: ['「連絡なくても会った時に話せれば大丈夫」と伝えておく', '戻ってきたときは責めず普通に接する', '自分の時間・趣味を充実させる', '「好きだけど急かさない」を態度で示す'],
     ng: ['「なんで逃げるの」と詰め寄る', '毎日連絡を求める・未読確認を責める', '「どうせまた逃げるんでしょ」と言う']
+  },
+  osore: {
+    icon: '🌪️',
+    title: '恐れ回避型（FA型）',
+    subtitle: '「好きだから逃げる」 ─ 最も複雑で、最も深く傷ついているタイプ',
+    signs: ['近づいたり離れたりを繰り返す', '恋愛だけでなく友達との関係も不安定', '仲良くなるほど試すような言動が増える', '攻撃的なことをした後に離れる'],
+    reason: ['愛されたい気持ちと、傷つくことへの恐怖が同時に存在', '幼少期に愛着対象が同時に恐怖の対象だった', '「どうせ捨てられる」という深い不信感'],
+    ok: ['彼が親密さを求めてきた時にたっぷり甘えさせる', '試し行動に動じず一定の態度を保つ', '関係のペースを彼に委ね、急かさない', '自分自身の安定が最大の武器と心得る'],
+    ng: ['感情の波に合わせて自分も揺れる', '「どっちなの」と白黒を迫る', '献身的になりすぎて自分を失う'],
+    bridge: '脱走型・サイレント型と重なる行動が多いタイプです。違いは「逃げながらも求めている」矛盾した感情が見えること。'
   },
   dokusai: {
     icon: '👑',
@@ -377,29 +235,42 @@ const types = {
   }
 };
 
-function selectLevel(lv, el) {
-  document.querySelectorAll('.level-card').forEach(c => c.classList.remove('active'));
-  el.classList.add('active');
-}
+const levels = {
+  lv1: {
+    bg: '#E8F8F2', color: '#0F6E56', badgeBg: '#C2EDE0', badge: 'Lv.1 軽度',
+    title: '軽度回避',
+    desc: '日常的な関わり方を少し調整するだけで改善の余地があります。焦らずゆっくり距離を縮めていきましょう。'
+  },
+  lv2: {
+    bg: '#FDF3E3', color: '#854F0B', badgeBg: '#F5D9A8', badge: 'Lv.2 中度',
+    title: '中度回避',
+    desc: 'タイプを見極めてアプローチを変えることが重要です。下のトリセツで彼のタイプを確認してみてください。'
+  },
+  lv3: {
+    bg: '#FDECEA', color: '#A32D2D', badgeBg: '#F5BFBF', badge: 'Lv.3 重度',
+    title: '重度回避',
+    desc: '壁が非常に厚く、変化には時間がかかります。相手の変化を期待するより、まず自分の軸を保つことが先決です。'
+  }
+};
 
 function toggleCheck(el) {
   el.classList.toggle('checked');
-  const box = el.querySelector('.check-box');
-  box.textContent = el.classList.contains('checked') ? '✓' : '';
-  const checked = document.querySelectorAll('.check-item.checked').length;
-  const r = document.getElementById('diagResult');
-  if (checked === 0) { r.className = 'diag-result'; return; }
-  r.classList.add('show');
-  if (checked <= 2) {
-    r.style.background = '#E1F5EE'; r.style.color = '#0F6E56';
-    r.textContent = '✦  Lv.1 軽度 ── 日常的な関わり方を少し調整するだけで改善の余地あり';
-  } else if (checked <= 5) {
-    r.style.background = '#FAEEDA'; r.style.color = '#854F0B';
-    r.textContent = '✦  Lv.2 中度 ── タイプを見極めてアプローチを変えることが重要';
-  } else {
-    r.style.background = '#FCEBEB'; r.style.color = '#A32D2D';
-    r.textContent = '✦  Lv.3 重度 ── 相手の変化を期待するより自分の軸を保つことが先決';
-  }
+  el.querySelector('.check-box').textContent = el.classList.contains('checked') ? '✓' : '';
+  const count = document.querySelectorAll('.check-item.checked').length;
+  const result = document.getElementById('levelResult');
+  if (count === 0) { result.className = 'level-result'; return; }
+  const lv = count <= 2 ? 'lv1' : count <= 5 ? 'lv2' : 'lv3';
+  const l = levels[lv];
+  result.className = 'level-result show';
+  const inner = document.getElementById('levelResultInner');
+  inner.style.background = l.bg;
+  inner.style.color = l.color;
+  const badge = document.getElementById('levelBadge');
+  badge.textContent = l.badge;
+  badge.style.background = l.badgeBg;
+  badge.style.color = l.color;
+  document.getElementById('levelTitle').textContent = l.title;
+  document.getElementById('levelDesc').textContent = l.desc;
 }
 
 function selectType(key, el) {
@@ -432,6 +303,7 @@ function selectType(key, el) {
       <div class="ng-label">NG ── 逆効果になること</div>
       ${t.ng.map(s => `<div class="ng-item"><span class="ng-arrow">×</span>${s}</div>`).join('')}
     </div>
+    ${t.bridge ? `<div style="margin-top:10px;padding:10px 14px;background:#EEEDFE;border-radius:10px;font-size:12px;color:#3C3489;line-height:1.7;">💡 ${t.bridge}</div>` : ''}
   `;
 }
 
